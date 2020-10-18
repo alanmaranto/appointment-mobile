@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {Text, StyleSheet, View, FlatList} from 'react-native';
 import Appointment from './src/components/Appointment';
+import Form from './src/components/Form';
+
 const App = () => {
   const data = [
     {id: '1', pacient: 'Puppy', owner: 'Alan', symptoms: 'It does not eat'},
@@ -21,6 +23,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Appointment Administrator</Text>
+      <Form />
       <Text style={styles.title}>
         {appointments.length > 0
           ? 'Administrate your appointments'
