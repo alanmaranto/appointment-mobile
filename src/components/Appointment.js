@@ -1,12 +1,10 @@
 import React from 'react';
 import {Text, StyleSheet, View, TouchableHighlight} from 'react-native';
 
-const Appointment = ({item}) => {
-    const onDelete = () => {
-        console.log('...deleting')
-    }
+const Appointment = ({item, onDelete}) => {
+
   return (
-    <View style={[styles.appointment]}>
+    <View style={styles.appointment}>
       <View>
         <Text style={styles.label}>Pacient: </Text>
         <Text style={styles.text}>{item.pacient}</Text>
@@ -19,8 +17,8 @@ const Appointment = ({item}) => {
         <Text style={styles.label}>Symptoms: </Text>
         <Text style={styles.text}>{item.symptoms}</Text>
       </View>
-      <TouchableHighlight onPress={() => onDelete()} style={styles.btnDelete}>
-          <Text style={styles.textDelete}>Delete &times;</Text>
+      <TouchableHighlight onPress={() => onDelete(item.id)} style={styles.btnDelete}>
+        <Text style={styles.textDelete}>Delete &times;</Text>
       </TouchableHighlight>
     </View>
   );
@@ -44,16 +42,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnDelete: {
-      padding: 10,
-      marginVertical: 10,
-      backgroundColor: 'red',
-      borderRadius: 20
+    padding: 10,
+    marginVertical: 10,
+    backgroundColor: 'red',
+    borderRadius: 20,
   },
   textDelete: {
     color: '#FFF',
     fontWeight: 'bold',
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 export default Appointment;
