@@ -1,7 +1,38 @@
 import React, {useState} from 'react';
-import {Text, StyleSheet, View, TextInput} from 'react-native';
-
+import {Text, StyleSheet, View, TextInput, Button} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { formatDate, formatTime } from '../helpers/helpers'
 const Form = () => {
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const onConfirmDate = (date) => {
+    setDate(date.toLocaleDateString('en-US', formatDate));
+    hideDatePicker();
+  };
+
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
+  const onConfirmTime = (time) => {
+      setTime(time.toLocaleString('en-US', formatTime))
+    hideTimePicker();
+  };
   return (
     <>
       <View style={styles.form}>
@@ -25,6 +56,37 @@ const Form = () => {
             keyboardType="numeric"></TextInput>
         </View>
         <View>
+          <Text style={styles.label}>Date:</Text>
+          <Button title="Select Date" onPress={showDatePicker} />
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={onConfirmDate}
+            onCancel={hideDatePicker}
+            headerTextIOS="Select date"
+            cancelTextIOS="Cancel"
+            confirmTextIOS="Confirm"
+            // locale='es_ES'
+          />
+          <Text>{date}</Text>
+        </View>
+
+        <View>
+          <Text style={styles.label}>Time:</Text>
+          <Button title="Select time" onPress={showTimePicker} />
+          <DateTimePickerModal
+            isVisible={isTimePickerVisible}
+            mode="time"
+            onConfirm={onConfirmTime}
+            onCancel={hideTimePicker}
+            headerTextIOS="Select time"
+            cancelTextIOS="Cancel"
+            confirmTextIOS="Confirm"
+            // locale="es_ES"
+          />
+          <Text>{time}</Text>
+        </View>
+        <View>
           <Text style={styles.label}>Symptoms:</Text>
           <TextInput
             multiline
@@ -37,7 +99,7 @@ const Form = () => {
 };
 
 const styles = StyleSheet.create({
-  label: {fontSize: 'bold', fontSize: 18, marginTop: 20},
+  label: {fontWeight: 'bold', fontSize: 18, marginTop: 20},
   input: {
     marginTop: 10,
     height: 50,
