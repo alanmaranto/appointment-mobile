@@ -2,7 +2,6 @@ import React from 'react';
 import {Text, StyleSheet, View, TouchableHighlight} from 'react-native';
 
 const Appointment = ({item, onDelete}) => {
-
   return (
     <View style={styles.appointment}>
       <View>
@@ -17,9 +16,13 @@ const Appointment = ({item, onDelete}) => {
         <Text style={styles.label}>Symptoms: </Text>
         <Text style={styles.text}>{item.symptoms}</Text>
       </View>
-      <TouchableHighlight onPress={() => onDelete(item.id)} style={styles.btnDelete}>
-        <Text style={styles.textDelete}>Delete &times;</Text>
-      </TouchableHighlight>
+      <View>
+        <TouchableHighlight
+          onPress={() => onDelete(item.id)}
+          style={styles.btnDelete}>
+          <Text style={styles.textDelete}>Delete &times;</Text>
+        </TouchableHighlight>
+      </View>
     </View>
   );
 };
@@ -32,6 +35,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 20,
     paddingHorizontal: 10,
+    borderRadius: 30
   },
   label: {
     fontWeight: 'bold',
