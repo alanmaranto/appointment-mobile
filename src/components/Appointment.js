@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 20,
     paddingHorizontal: 10,
-    borderRadius: 30
   },
   label: {
     fontWeight: 'bold',

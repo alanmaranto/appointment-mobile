@@ -7,6 +7,7 @@ import {
   Button,
   TouchableHighlight,
   Alert,
+  ScrollView,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {formatDate, formatTime} from '../helpers/helpers';
@@ -74,7 +75,7 @@ const Form = () => {
 
   return (
     <>
-      <View style={styles.form}>
+      <ScrollView style={styles.form}>
         <View>
           <Text style={styles.label}>Pacient:</Text>
           <TextInput
@@ -139,7 +140,7 @@ const Form = () => {
             <Text style={styles.textSubmit}>Add</Text>
           </TouchableHighlight>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };
@@ -158,7 +159,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginHorizontal: '2.5%',
-    borderRadius: 30,
   },
   btnSubmit: {
     padding: 10,

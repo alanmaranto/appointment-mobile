@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Text, StyleSheet, View, FlatList} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  FlatList,
+  TouchableHighlight,
+  Platform
+} from 'react-native';
 import Appointment from './src/components/Appointment';
 import Form from './src/components/Form';
 
@@ -10,7 +17,7 @@ const App = () => {
     {id: '3', pacient: 'Puppy2', owner: 'Alan2', symptoms: 'It does not bark'},
     {id: '4', pacient: 'Puppy2', owner: 'Alan2', symptoms: 'It does not bark'},
   ];
-
+  const [isFormVisible, setIsFormVisible] = useState(false);
   const [appointments, setaApointments] = useState(data);
 
   const onDelete = (id) => {
@@ -20,20 +27,45 @@ const App = () => {
     });
   };
 
+  const showForm = () => {
+    setIsFormVisible(!isFormVisible);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Appointment Administrator</Text>
-      <Form />
-      <Text style={styles.title}>
-        {appointments.length > 0
-          ? 'Administrate your appointments'
-          : 'There are not appointments'}
-      </Text>
-      <FlatList
-        data={appointments}
-        renderItem={({item}) => <Appointment item={item} onDelete={onDelete} />}
-        keyExtractor={(appointment) => appointment.id}
-      />
+      <View>
+        <TouchableHighlight
+          onPress={() => showForm()}
+          style={styles.btnShowForm}>
+          <Text style={styles.textShowForm}>Show Form</Text>
+        </TouchableHighlight>
+      </View>
+
+      <View style={styles.content}>
+        {isFormVisible ? (
+          <>
+            <Text style={styles.title}>Add new appointment</Text>
+            <Form />
+          </>
+        ) : (
+          <>
+            <Text style={styles.title}>
+              {appointments.length > 0
+                ? 'Administrate your appointments'
+                : 'There are not appointments'}
+            </Text>
+            <FlatList
+              style={styles.content}
+              data={appointments}
+              renderItem={({item}) => (
+                <Appointment item={item} onDelete={onDelete} />
+              )}
+              keyExtractor={(appointment) => appointment.id}
+            />
+          </>
+        )}
+      </View>
     </View>
   );
 };
@@ -45,11 +77,28 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#FFF',
-    marginTop: 40,
+    marginTop: Platform.OS === 'ios' ? 40 : 20,
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+  },
+  content: {
+    flex: 1,
+    marginHorizontal: '2.5%',
+  },
+  list: {
+    flex: 1,
+  },
+  btnShowForm: {
+    padding: 10,
+    marginVertical: 10,
+    backgroundColor: '#7d024e',
+  },
+  textShowForm: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
