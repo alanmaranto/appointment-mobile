@@ -6,17 +6,14 @@ import {
   FlatList,
   TouchableHighlight,
   Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import Appointment from './src/components/Appointment';
 import Form from './src/components/Form';
 
 const App = () => {
-  const data = [
-    {id: '1', pacient: 'Puppy', owner: 'Alan', symptoms: 'It does not eat'},
-    {id: '2', pacient: 'Puppy2', owner: 'Alan2', symptoms: 'It does not bark'},
-    {id: '3', pacient: 'Puppy2', owner: 'Alan2', symptoms: 'It does not bark'},
-    {id: '4', pacient: 'Puppy2', owner: 'Alan2', symptoms: 'It does not bark'},
-  ];
+  const data = [];
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [appointments, setAppointments] = useState(data);
 
@@ -31,46 +28,54 @@ const App = () => {
     setIsFormVisible(!isFormVisible);
   };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Appointment Administrator</Text>
-      <View>
-        <TouchableHighlight
-          onPress={() => showForm()}
-          style={styles.btnShowForm}>
-          <Text style={styles.textShowForm}>Show Form</Text>
-        </TouchableHighlight>
-      </View>
+  const closeKeyboard = () => {
+    Keyboard.dismiss();
+  };
 
-      <View style={styles.content}>
-        {isFormVisible ? (
-          <>
-            <Text style={styles.title}>Add new appointment</Text>
-            <Form
-              appointments={appointments}
-              setAppointments={setAppointments}
-              setIsFormVisible={setIsFormVisible}
-            />
-          </>
-        ) : (
-          <>
-            <Text style={styles.title}>
-              {appointments.length > 0
-                ? 'Administrate your appointments'
-                : 'There are not appointments'}
+  return (
+    <TouchableWithoutFeedback onPress={() => closeKeyboard()}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Appointment Administrator</Text>
+        <View>
+          <TouchableHighlight
+            onPress={() => showForm()}
+            style={styles.btnShowForm}>
+            <Text style={styles.textShowForm}>
+              {isFormVisible ? 'Cancel add appointment' : 'Add appointment'}
             </Text>
-            <FlatList
-              style={styles.content}
-              data={appointments}
-              renderItem={({item}) => (
-                <Appointment item={item} onDelete={onDelete} />
-              )}
-              keyExtractor={(appointment) => appointment.id}
-            />
-          </>
-        )}
+          </TouchableHighlight>
+        </View>
+
+        <View style={styles.content}>
+          {isFormVisible ? (
+            <>
+              <Text style={styles.title}>Add new appointment</Text>
+              <Form
+                appointments={appointments}
+                setAppointments={setAppointments}
+                setIsFormVisible={setIsFormVisible}
+              />
+            </>
+          ) : (
+            <>
+              <Text style={styles.title}>
+                {appointments.length > 0
+                  ? 'Administrate your appointments'
+                  : 'There are not appointments'}
+              </Text>
+              <FlatList
+                style={styles.content}
+                data={appointments}
+                renderItem={({item}) => (
+                  <Appointment item={item} onDelete={onDelete} />
+                )}
+                keyExtractor={(appointment) => appointment.id}
+              />
+            </>
+          )}
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
