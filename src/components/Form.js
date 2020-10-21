@@ -1,12 +1,24 @@
 import React, {useState} from 'react';
-import {Text, StyleSheet, View, TextInput, Button} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  TextInput,
+  Button,
+  TouchableHighlight,
+  Alert,
+} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { formatDate, formatTime } from '../helpers/helpers'
+import {formatDate, formatTime} from '../helpers/helpers';
 const Form = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [pacient, setPacient] = useState('');
+  const [owner, setOwner] = useState('');
+  const [phone, setPhone] = useState('');
+  const [symptoms, setSymptoms] = useState('');
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -30,9 +42,36 @@ const Form = () => {
   };
 
   const onConfirmTime = (time) => {
-      setTime(time.toLocaleString('en-US', formatTime))
+    setTime(time.toLocaleString('en-US', formatTime));
     hideTimePicker();
   };
+
+  const showAlert = () => {
+    Alert.alert(
+      'Error', // Title
+      'All fields are required', // Message
+      [
+        {
+          text: 'OK',
+        },
+      ],
+    );
+  };
+
+  const addAppointment = () => {
+    if (
+      pacient.trim() === '' ||
+      owner.trim() === '' ||
+      phone.trim() === '' ||
+      date.trim() === '' ||
+      time.trim() === '' ||
+      symptoms.trim() === ''
+    ) {
+      showAlert();
+      return;
+    }
+  };
+
   return (
     <>
       <View style={styles.form}>
@@ -40,19 +79,19 @@ const Form = () => {
           <Text style={styles.label}>Pacient:</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => console.log(text)}></TextInput>
+            onChangeText={(e) => setPacient(e)}></TextInput>
         </View>
         <View>
           <Text style={styles.label}>Owner:</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => console.log(text)}></TextInput>
+            onChangeText={(e) => setOwner(e)}></TextInput>
         </View>
         <View>
           <Text style={styles.label}>Phone Contact:</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => console.log(text)}
+            onChangeText={(e) => setPhone(e)}
             keyboardType="numeric"></TextInput>
         </View>
         <View>
@@ -91,7 +130,14 @@ const Form = () => {
           <TextInput
             multiline
             style={styles.input}
-            onChangeText={(text) => console.log(text)}></TextInput>
+            onChangeText={(e) => setSymptoms(e)}></TextInput>
+        </View>
+        <View>
+          <TouchableHighlight
+            onPress={() => addAppointment()}
+            style={styles.btnSubmit}>
+            <Text style={styles.textSubmit}>Add</Text>
+          </TouchableHighlight>
         </View>
       </View>
     </>
@@ -112,6 +158,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginHorizontal: '2.5%',
+    borderRadius: 30,
+  },
+  btnSubmit: {
+    padding: 10,
+    marginVertical: 10,
+    backgroundColor: '#7d024e',
+    borderRadius: 20,
+  },
+  textSubmit: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
