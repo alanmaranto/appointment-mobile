@@ -5,7 +5,7 @@ import {
   View,
   FlatList,
   TouchableHighlight,
-  Platform
+  Platform,
 } from 'react-native';
 import Appointment from './src/components/Appointment';
 import Form from './src/components/Form';
@@ -18,11 +18,11 @@ const App = () => {
     {id: '4', pacient: 'Puppy2', owner: 'Alan2', symptoms: 'It does not bark'},
   ];
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [appointments, setaApointments] = useState(data);
+  const [appointments, setAppointments] = useState(data);
 
   const onDelete = (id) => {
     console.log('...deleting', id);
-    setaApointments((actualAppointment) => {
+    setAppointments((actualAppointment) => {
       return actualAppointment.filter((appointment) => appointment.id !== id);
     });
   };
@@ -46,7 +46,11 @@ const App = () => {
         {isFormVisible ? (
           <>
             <Text style={styles.title}>Add new appointment</Text>
-            <Form />
+            <Form
+              appointments={appointments}
+              setAppointments={setAppointments}
+              setIsFormVisible={setIsFormVisible}
+            />
           </>
         ) : (
           <>
