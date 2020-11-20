@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Text, StyleSheet, View, TouchableHighlight} from 'react-native';
 
@@ -16,7 +17,7 @@ const Appointment = ({item, onDelete}) => {
         <Text style={styles.label}>Symptoms: </Text>
         <Text style={styles.text}>{item.symptoms}</Text>
       </View>
-      <View>
+      <View style={{paddingTop: 10}}>
         <TouchableHighlight
           onPress={() => onDelete(item.id)}
           style={styles.btnDelete}>
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
   btnDelete: {
     padding: 10,
     marginVertical: 10,
-    backgroundColor: 'red',
+    backgroundColor: '#c52323',
     borderRadius: 20,
   },
   textDelete: {

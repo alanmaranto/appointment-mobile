@@ -35,7 +35,7 @@ const App = () => {
   return (
     <TouchableWithoutFeedback onPress={() => closeKeyboard()}>
       <View style={styles.container}>
-        <Text style={styles.title}>Appointment Administrator</Text>
+        <Text style={styles.header}>Appointment Administrator</Text>
         <View>
           <TouchableHighlight
             onPress={() => showForm()}
@@ -49,7 +49,7 @@ const App = () => {
         <View style={styles.content}>
           {isFormVisible ? (
             <>
-              <Text style={styles.title}>Add new appointment</Text>
+              <Text style={styles.titleAdd}>Add new appointment</Text>
               <Form
                 appointments={appointments}
                 setAppointments={setAppointments}
@@ -58,7 +58,7 @@ const App = () => {
             </>
           ) : (
             <>
-              <Text style={styles.title}>
+              <Text style={styles.titleAdd}>
                 {appointments.length > 0
                   ? 'Administrate your appointments'
                   : 'There are not appointments'}
@@ -81,8 +81,24 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#AA076B',
+    backgroundColor: '#45266d',
     flex: 1,
+  },
+  header: {
+    color: '#FFF',
+    marginTop: Platform.OS === 'ios' ? 60 : 20,
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  titleAdd: {
+    color: '#FFF',
+    marginTop: Platform.OS === 'ios' ? 5 : 20,
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
   },
   title: {
     color: '#FFF',
@@ -102,7 +118,7 @@ const styles = StyleSheet.create({
   btnShowForm: {
     padding: 10,
     marginVertical: 10,
-    backgroundColor: '#7d024e',
+    backgroundColor: '#7e205a',
   },
   textShowForm: {
     color: '#FFF',
